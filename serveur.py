@@ -3,6 +3,8 @@ from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
 from os import curdir, sep
 import cgi
 
+import simplifier
+
 PORT_NUMBER = 8080
 
 #This class will handles any incoming request from
@@ -59,10 +61,13 @@ class myHandler(BaseHTTPRequestHandler):
 	                 'CONTENT_TYPE':self.headers['Content-Type'],
 		})
 
+
 		self.send_response(200)
 		self.end_headers()
-		if 'ajaxUrl' in form :
-			self.wfile.write("Url recu: %s" % form["value"].value)
+		self.wfile.write(simplifier.simplifySentences(form["value"].value))
+		# for x in form["value[sentences][]"]:
+		# 	print x.value
+		# 	print "\n-------------------------\n"
 		return			
 			
 			
