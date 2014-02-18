@@ -29,7 +29,7 @@
                         <span class="glyphicon glyphicon-circle-arrow-left" style="color: red"></span> Remove
                     </button>
                 </div>
-                <div class="col-md-5" style="border: 1px solid black; height: 200px;">
+                <div class="col-md-5" style="border: 1px solid black; height: 500px;">
                 </div>
             </div>
             <!--<div class="row">
