@@ -33,6 +33,10 @@ $(document).ready(function() {
         .success(function(data)
         {
             data = $.parseJSON(data);
+            
+            $("#raw").val("");
+            $("#simplified").html("");
+            
             $.each(data["sentences"], function(i, val) 
             {
                 $("#simplified").append(CreateCheckbox(val["raw"], val["simplified"]));
