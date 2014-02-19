@@ -8,7 +8,7 @@
  
     <body>
         <section class="container">
-            <div class="row">
+            <div class="row" style="margin-top: 30px;">
                 <div class="col-md-6 col-md-offset-3">
                     <textarea type="text" class="form-control" placeholder="Text" id="raw" rows="5"></textarea>    
                 </div>
@@ -18,7 +18,7 @@
                     <button class="btn btn-default" type="button" id="submit">Submit</button>
                 </div>
             </div>
-            <div="row">
+            <!-- <div="row">
                 <div class="col-md-5" style="border: 1px solid black;" id="simplified">
                 </div>
                 <div class="col-md-2">
@@ -31,22 +31,15 @@
                 </div>
                 <div class="col-md-5" style="border: 1px solid black; height: 200px;">
                 </div>
-            </div>
-            <!--<div class="row">
+            </div> -->
+            <div class="row">
                 <div class="col-md-8" style="margin-top: 10px;">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Sentences</h3>
                         </div>
-                        <div class="panel-body">
-                            <ul>
-                                <li> sentence 1 </li>
-                                <li> sentence 2 </li>
-                                <li> sentence 3 </li>
-                                <li> sentence 4 </li>
-                                <li> sentence 5 </li>
-                                <li> sentence 6 </li>
-                            </ul>
+                        <div class="panel-body" id="sentences">
+
                         </div>
                     </div>
                 </div>
@@ -73,18 +66,12 @@
                         <div class="panel-heading">
                             <h3 class="panel-title">Selected sentences</h3>
                         </div>
-                        <div class="panel-body">
-                            <ul>
-                                <li> sentence 1 - Intro </li>
-                                <li> sentence 2 - Intro </li>
-                                <li> sentence 3 - Method</li>
-                                <li> sentence 4 - Discussion</li>
-                                <li> sentence 5 - Discussion </li>
-                            </ul>
+                        <div class="panel-body" id="selected">
+             
                         </div>
                     </div>
                 </div>
-            </div>-->
+            </div>
         </section>
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
