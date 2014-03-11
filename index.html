@@ -14,43 +14,52 @@
             </div>
         </nav>
         <section class="container">
-            
-            <div class="row">
+            <div class="row" style="margin-top: 20px;">
                 <div class="col-md-6 col-md-offset-3">
-                    <textarea type="text" class="form-control" placeholder="Paste your text here" id="raw" rows="10"></textarea>    
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="URL" id="url">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="go">Go!</button>
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 col-md-offset-4">
-                    <button class="btn btn-default btn-lg btn-block" type="button" id="submit">Submit</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-8" style="margin-top: 10px;">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Simplified sentences</h3>
+                            <h3 class="panel-title">Sentences</h3>
                         </div>
-                        <div class="panel-body" id="simplified">
-                            No sentences!
+                        <div class="panel-body" id="parser">
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-default btn-lg" style="width: 123px;">
-                        Add <span class="glyphicon glyphicon-circle-arrow-right" style="color: green"></span> 
-                    </button>
-                    <button type="button" class="btn btn-default btn-lg">
-                        <span class="glyphicon glyphicon-circle-arrow-left" style="color: red"></span> Remove
-                    </button>
+                 <div class="col-md-4" style="margin-top: 10px;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Text Section</h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul id="sections">
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-5">
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="margin-top: 10px;">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Selected sentences</h3>
                         </div>
-                        <div class="panel-body" id="simplified">
-                            No sentence selected!
+                        <div class="panel-body">
+                            <ul>
+                                <li> sentence 1 - Intro </li>
+                                <li> sentence 2 - Intro </li>
+                                <li> sentence 3 - Method</li>
+                                <li> sentence 4 - Discussion</li>
+                                <li> sentence 5 - Discussion </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

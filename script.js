@@ -1,53 +1,57 @@
 $(document).ready(function() {
 
-    var json = 
-    {
-        "sentences": 
-        [
-            {
-                "raw":"bla bla bla",
-                "simplified": "bla"
-            },
-            {
-                "raw":"bla bla bla1",
-                "simplified": "bla1"
-            },
-            {
-                "raw":"bla bla bla2",
-                "simplified": "bla2"
-            },
-            {
-                "raw":"bla bla bla3",
-                "simplified": "bla3"
-            }
+    var url = "http://www.nejm.org/doi/full/10.1056/NEJMoa1309199#t=article";
 
-        ]
-    }
-    
-    $('#submit').click(function(){
-        $.post( "/", 
-        {
-            ajaxUrl: "true", 
-            value: $('#raw').val() 
-        })
-        .success(function(data)
-        {
-            data = $.parseJSON(data);
-            
-            $("#raw").val("");
-            $("#simplified").html("");
-            
-            $.each(data["sentences"], function(i, val) 
+    $("#go").on("click", function(){
+        if ($("#url").val() != ""){
+            $.post( "/",
             {
-                $("#simplified").append(CreateCheckbox(val["raw"], val["simplified"]));
-                
-                $("#simplified .checkbox").last().tooltip({
-                    title: val["raw"],
-                    placement: "left"
-                });
+                ajaxUrl: true,
+                action: "extract",
+                url: $("#url").val(),
+            })
+            .success(function(data)
+            {
+                parser(data);
             });
-        });
+        }
     });
+
+    function parser(data){
+        var html = jQuery(data);
+        html = html.find("#article");
+        html.find(".section").each(function(){
+            var title = $(this).find("h3").first().text();
+            if (title != ""){
+                $("#parser").append("<h3>" + title + "</h3>");
+                $("#sections").append("<li>" + title + "</li>");
+            }
+            $(this).find("p").each(function(){
+                $.post( "/",
+                {
+                    ajaxUrl: "true",
+                    action: "simplifier",
+                    value: $(this).text(),
+                    async: false
+                })
+                .success(function(data)
+                {
+                    data = $.parseJSON(data);
+                    
+                    $.each(data["sentences"], function(i, val) 
+                    {
+                        $("#parser").append(CreateCheckbox(val["raw"], val["simplified"]));
+                        
+                        $("#parser .checkbox").last().tooltip({
+                            title: val["raw"],
+                            placement: "left"
+                        });
+                    });
+                })
+                            
+            });      
+        });
+    }
     
     function CreateCheckbox(raw, simplified)
     {
