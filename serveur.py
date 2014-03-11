@@ -4,6 +4,7 @@ from os import curdir, sep
 import cgi
 
 import simplifier
+import external
 
 PORT_NUMBER = 8080
 
@@ -64,8 +65,13 @@ class myHandler(BaseHTTPRequestHandler):
 
 		self.send_response(200)
 		self.end_headers()
-		self.wfile.write(simplifier.simplifySentences(form["value"].value))
-		# for x in form["value[sentences][]"]:
+        
+		if form["action"].value == "simplifier":
+			self.wfile.write(simplifier.simplifySentences(form["value"].value))
+		if form["action"].value == "extract":
+			self.wfile.write(external.extractHtml(form["url"].value))
+		
+        # for x in form["value[sentences][]"]:
 		# 	print x.value
 		# 	print "\n-------------------------\n"
 		return			
