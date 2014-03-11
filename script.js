@@ -32,41 +32,24 @@ $(document).ready(function() {
         })
         .success(function(data)
         {
-            $("#sentences").html('');
             data = $.parseJSON(data);
-            
-            $("#raw").val("");
-            $("#simplified").html("");
-            
             $.each(data["sentences"], function(i, val) 
             {
-                $("#sentences").append(CreateCheckbox(val["raw"], val["simplified"]));
+                $("#simplified").append(CreateCheckbox(val["raw"], val["simplified"]));
                 
-                $("#sentences .checkbox").last().tooltip({
+                $("#simplified .checkbox").last().tooltip({
                     title: val["raw"],
-                    placement: "top"
+                    placement: "left"
                 });
             });
         });
-    });
-
-    $(document).on('click','.checkSentence',function(){
-        if($(this).is(':checked')){
-            var div = $(this).closest('div');
-            $('#selected').append(div);
-        }
-        else{
-            var div = $(this).closest('div');
-            $('#sentences').append(div);
-        }
-        
     });
     
     function CreateCheckbox(raw, simplified)
     {
         var checkbox = "";
         
-        checkbox += "<div class='checkbox'><label><input type='checkbox' class='checkSentence'>";
+        checkbox += "<div class='checkbox'><label><input type='checkbox'>";
         
         checkbox += simplified;
         
