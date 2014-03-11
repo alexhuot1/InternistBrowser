@@ -32,6 +32,7 @@ $(document).ready(function() {
         })
         .success(function(data)
         {
+            $("#sentences").html('');
             data = $.parseJSON(data);
             
             $("#raw").val("");
@@ -39,21 +40,33 @@ $(document).ready(function() {
             
             $.each(data["sentences"], function(i, val) 
             {
-                $("#simplified").append(CreateCheckbox(val["raw"], val["simplified"]));
+                $("#sentences").append(CreateCheckbox(val["raw"], val["simplified"]));
                 
-                $("#simplified .checkbox").last().tooltip({
+                $("#sentences .checkbox").last().tooltip({
                     title: val["raw"],
-                    placement: "left"
+                    placement: "top"
                 });
             });
         });
+    });
+
+    $(document).on('click','.checkSentence',function(){
+        if($(this).is(':checked')){
+            var div = $(this).closest('div');
+            $('#selected').append(div);
+        }
+        else{
+            var div = $(this).closest('div');
+            $('#sentences').append(div);
+        }
+        
     });
     
     function CreateCheckbox(raw, simplified)
     {
         var checkbox = "";
         
-        checkbox += "<div class='checkbox'><label><input type='checkbox'>";
+        checkbox += "<div class='checkbox'><label><input type='checkbox' class='checkSentence'>";
         
         checkbox += simplified;
         

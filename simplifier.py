@@ -7,11 +7,13 @@ import json
 # entities = nltk.chunk.ne_chunk(tagged)
 # print tokens
 
+USELESSTAG = ['DT']
+
 def simplifySentences(paragraphes):
     sentences = []
     for s in splitSententences(paragraphes):
-        tagged = str(setTags(s))
-        sentences.append({ 'raw': s, 'simplified': tagged})
+        tagged = setTags(s)
+        sentences.append({ 'raw': s, 'simplified': removeUselessTag(tagged)})
 
     return json.dumps(
         {
@@ -28,3 +30,5 @@ def setTags(sentences):
     tokens = nltk.word_tokenize(sentences)
     return nltk.pos_tag(tokens)
 
+def removeUselessTag(sentence):
+    return ' '.join([ x[0] for x in sentence if x[1] not in USELESSTAG ])
