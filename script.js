@@ -24,7 +24,7 @@ $(document).ready(function() {
         html.find(".section").each(function(){
             var title = $(this).find("h3").first().text();
             if (title != ""){
-                $("#parser").append("<h3>" + title + "</h3>");
+               // $("#parser").append("<h3>" + title + "</h3>");
                 $("#sections").append("<li>" + title + "</li>");
             }
             $(this).find("p").each(function(){
@@ -32,8 +32,7 @@ $(document).ready(function() {
                 {
                     ajaxUrl: "true",
                     action: "simplifier",
-                    value: $(this).text(),
-                    async: false
+                    value: $(this).text()
                 })
                 .success(function(data)
                 {
@@ -41,24 +40,24 @@ $(document).ready(function() {
                     
                     $.each(data["sentences"], function(i, val) 
                     {
-                        $("#parser").append(CreateCheckbox(val["raw"], val["simplified"]));
+                        $("#parser").append(CreateCheckbox(val["simplified"]));
                         
                         $("#parser .checkbox").last().tooltip({
                             title: val["raw"],
-                            placement: "left"
+                            placement: "top"
                         });
                     });
                 })
                             
-            });      
+            });
         });
     }
     
-    function CreateCheckbox(raw, simplified)
+    function CreateCheckbox(simplified)
     {
         var checkbox = "";
         
-        checkbox += "<div class='checkbox'><label><input type='checkbox'>";
+        checkbox += "<div class='checkbox'><label><input type='checkbox' class='checkSentence'>";
         
         checkbox += simplified;
         
@@ -67,4 +66,16 @@ $(document).ready(function() {
         return checkbox;
     }
     
+    $(document).on('click','.checkSentence',function(){
+        alert("click");
+        if($(this).is(':checked')){
+            var div = $(this).closest('div');
+            $('#selected').append(div);
+        }
+        else{
+            var div = $(this).closest('div');
+            $('#parser').append(div);
+        }
+        
+    });
 });
