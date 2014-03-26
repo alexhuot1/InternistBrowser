@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import nltk
 import json 
-
+import sumerizer
 # tokens = nltk.word_tokenize(sentence)
 # tagged = nltk.pos_tag(tokens)
 # entities = nltk.chunk.ne_chunk(tagged)
@@ -32,3 +32,12 @@ def setTags(sentences):
 
 def removeUselessTag(sentence):
     return ' '.join([ x[0] for x in sentence if x[1] not in USELESSTAG ])
+
+def resume(paragraphes):
+    naivesum = sumerizer.NaiveSummarizer()
+    sentences = []
+    sentences.append({ 'raw': paragraphes, 'simplified': naivesum.summarize(paragraphes,1)})
+    return json.dumps(
+        {
+            "sentences": sentences
+        })

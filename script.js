@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
     var url = "http://www.nejm.org/doi/full/10.1056/NEJMoa1309199#t=article";
-
     $("#go").on("click", function(){
         if ($("#url").val() != ""){
             $.post( "/",
@@ -13,7 +12,10 @@ $(document).ready(function() {
             .success(function(data)
 
             {
+                $("#parser").html("");
+                $("#sections").html("");
                 parser(data);
+
             });
         }
     });
@@ -36,6 +38,7 @@ $(document).ready(function() {
                 })
                 .success(function(data)
                 {
+
                     data = $.parseJSON(data);
                     
                     $.each(data["sentences"], function(i, val) 
@@ -57,25 +60,34 @@ $(document).ready(function() {
     {
         var checkbox = "";
         
-        checkbox += "<div class='checkbox'><label><input type='checkbox' class='checkSentence'>";
+        checkbox += "<div class='checkbox'><span class='checkSentence'>";
         
         checkbox += simplified;
         
-        checkbox += "</label></div>"
+        checkbox += "</span></div>"
         
         return checkbox;
     }
     
+    
+
     $(document).on('click','.checkSentence',function(){
-        alert("click");
-        if($(this).is(':checked')){
-            var div = $(this).closest('div');
+        var div = $(this).closest('div');
+        if($(this).parent().parent().attr('id') == "parser"){
+            div.append("<button class=\"btn btn-default copyBtn\" type=\"button\">Copy</button>");
             $('#selected').append(div);
+            $('.copyBtn').zclip({
+                path:'ZeroClipboard.swf',
+                copy: $(this).parent().find("span").text()
+            });
         }
-        else{
-            var div = $(this).closest('div');
+        else{  
+            div.find("button").remove()
             $('#parser').append(div);
         }
         
     });
+
+    
+    
 });

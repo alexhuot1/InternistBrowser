@@ -6,6 +6,7 @@ import cgi
 import simplifier
 import external
 
+
 PORT_NUMBER = 8080
 
 #This class will handles any incoming request from
@@ -37,6 +38,10 @@ class myHandler(BaseHTTPRequestHandler):
 			if self.path.endswith(".css"):
 				mimetype='text/css'
 				sendReply = True
+			if self.path.endswith(".swf"):
+				mimetype='application/x-shockwave-flash'
+				sendReply = True
+				
 
 			if sendReply == True:
 				#Open the static file requested and send it
@@ -65,15 +70,12 @@ class myHandler(BaseHTTPRequestHandler):
 
 		self.send_response(200)
 		self.end_headers()
-        
 		if form["action"].value == "simplifier":
+			# self.wfile.write(simplifier.resume(form["value"].value))
 			self.wfile.write(simplifier.simplifySentences(form["value"].value))
 		if form["action"].value == "extract":
 			self.wfile.write(external.extractHtml(form["url"].value))
 		
-        # for x in form["value[sentences][]"]:
-		# 	print x.value
-		# 	print "\n-------------------------\n"
 		return			
 			
 			
