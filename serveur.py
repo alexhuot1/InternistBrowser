@@ -73,8 +73,10 @@ class myHandler(BaseHTTPRequestHandler):
 		if form["action"].value == "simplifier":
 			# self.wfile.write(simplifier.resume(form["value"].value))
 			self.wfile.write(simplifier.simplifySentences(form["value"].value))
-		if form["action"].value == "extract":
+		elif form["action"].value == "extract":
 			self.wfile.write(external.extractHtml(form["url"].value))
+		elif form["action"].value == "loadCSV":
+			self.wfile.write(simplifier.loadCSV(form["csvPath"].value))
 		
 		return			
 			

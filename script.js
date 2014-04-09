@@ -31,6 +31,15 @@ $(document).ready(function() {
         }
     });
 
+    $("#load").on("click", function(){
+        $.post( "/",
+        {
+            ajaxUrl: true,
+            action: "loadCSV",
+            csvPath: $("#csv").val()
+        });
+    });
+
     function extractText(data, parser){
         var html = jQuery(data);
         parser(html);
@@ -48,6 +57,7 @@ $(document).ready(function() {
             default:
                 return 0;
         }
+
     }
     
     function parser_nejm(html){
@@ -72,9 +82,16 @@ $(document).ready(function() {
                     {
                         $("#parser").append(CreateCheckbox(val["simplified"]));
                         
-                        $("#parser .checkbox").last().tooltip({
-                            title: val["raw"],
-                            placement: "top"
+                        // $("#parser .checkbox").last().tooltip({
+                        //     title: val["raw"],
+                        //     placement: "top"
+                        // });
+                        $(".checkbox").last().find("b").each(function(){
+                            // $(this).tooltip({
+                            //     title: $(this).data("bookmark"),
+                            //     placement: "top"
+                            // });
+                        
                         });
                     });
                 })
@@ -155,32 +172,42 @@ $(document).ready(function() {
     {
         var checkbox = "";
         
-        checkbox += "<div class='checkbox'><span class='checkSentence'>";
+        checkbox += "<div class='checkbox'><button type=\"button\" class=\"btn btn-default btn-xs selectBtn\"><span class=\"glyphicon glyphicon-plus\"></span></button>&nbsp;<span class='checkSentence'>";
         
         checkbox += simplified;
         
-        checkbox += "</span></div>"
+        checkbox += "</span></div>";
         
         return checkbox;
     }
     
     
 
-    $(document).on('click','.checkSentence',function(){
+    $(document).on('click','button.selectBtn',function(){
         var div = $(this).closest('div');
         if($(this).parent().parent().attr('id') == "parser"){
-            div.append("<button class=\"btn btn-default copyBtn\" type=\"button\">Copy</button>");
+            div.find("button").remove()
+            div.prepend("<button class=\"btn btn-default btn-xs selectBtn\" type=\"button\"><span class=\"glyphicon glyphicon-minus\"></span></button>&nbsp;<button class=\"btn btn-default btn-xs copyBtn\" type=\"button\">Copy</button>&nbsp; ");
             $('#selected').append(div);
-            $('.copyBtn').zclip({
-                path:'ZeroClipboard.swf',
-                copy: $(this).parent().find("span").text()
-            });
         }
         else{  
             div.find("button").remove()
+            div.prepend("<button type=\"button\" class=\"btn btn-default btn-xs selectBtn\"><span class=\"glyphicon glyphicon-plus\"></span></button>")
             $('#parser').append(div);
         }
-        
+
+        $('#selected .copyBtn').each(function(){
+            $(this).zclip({
+                path:'ZeroClipboard.swf',
+                copy: $(this).parent().find(".checkSentence ").text()
+            });
+        });
+        $("#selected b").each(function(){
+            $(this).zclip({
+                path:'ZeroClipboard.swf',
+                copy: $(this).data("bookmark")
+            });
+        });
     });
 
     
