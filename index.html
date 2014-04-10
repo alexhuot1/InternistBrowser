@@ -14,10 +14,15 @@
             </div>
         </nav>
         <section class="container">
+            <div class="row">
+                <div class="col-md-1 col-md-offset-11">
+                    <button id="close" type="button" class="btn btn-danger">Close app</button>
+                </div>
+            </div>
             <div class="row" style="margin-top: 20px;">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Path to CSV bookmark file" id="csv">
+                        <input type="text" class="form-control" placeholder='Path to CSV bookmark file with "," as delimiter' id="csv">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" id="load">Load!</button>
                         </span>

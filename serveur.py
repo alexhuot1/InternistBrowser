@@ -2,13 +2,14 @@
 from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
 from os import curdir, sep
 import cgi
-
+from threading import Thread
 import simplifier
 import external
-
+import sys
+import webbrowser
 
 PORT_NUMBER = 8080
-
+server = ""
 #This class will handles any incoming request from
 #the browser 
 class myHandler(BaseHTTPRequestHandler):
@@ -54,12 +55,13 @@ class myHandler(BaseHTTPRequestHandler):
 			return
 
 		except IOError:
-			self.send_error(404,'File Not Found: %s' % self.path)
+			return
+		# 	self.send_error(404,'File Not Found: %s' % self.path)
 
 	# #Handler for the POST requests
 	def do_POST(self):
-		print "received POST"
-		print self.path
+		# print "received POST"
+		# print self.path
 		form = cgi.FieldStorage(
 			fp=self.rfile, 
 			headers=self.headers,
@@ -71,23 +73,28 @@ class myHandler(BaseHTTPRequestHandler):
 		self.send_response(200)
 		self.end_headers()
 		if form["action"].value == "simplifier":
-			# self.wfile.write(simplifier.resume(form["value"].value))
 			self.wfile.write(simplifier.simplifySentences(form["value"].value))
 		elif form["action"].value == "extract":
 			self.wfile.write(external.extractHtml(form["url"].value))
 		elif form["action"].value == "loadCSV":
 			self.wfile.write(simplifier.loadCSV(form["csvPath"].value))
+		elif form["action"].value == "closeApp":
+			print"allo"
+			server.socket.close()
 		
-		return			
-			
+		return	
+
+# def openBrowser():
+	
 			
 try:
 	#Create a web server and define the handler to manage the
 	#incoming request
 	server = HTTPServer(('', PORT_NUMBER), myHandler)
 	print 'Started httpserver on port ' , PORT_NUMBER
-	
+	webbrowser.open('http://localhost:8080')
 	#Wait forever for incoming htto requests
+	#Thread(target=openBrowser).start()
 	server.serve_forever()
 
 except KeyboardInterrupt:

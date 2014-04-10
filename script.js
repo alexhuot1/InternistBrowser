@@ -66,13 +66,13 @@ $(document).ready(function() {
     function parser_nejm_title(){
         html = content.find("#article");
         
-        $("#sections").append("<li>abstract</li>");
+        $("#sections").append("<li><a href=\"#\">abstract</a></li>");
         
         html.find(".section").each(function(){
             var title = $(this).find("h3").first().text().toLowerCase();
             
             if (title != ""){
-                $("#sections").append("<li>" + title + "</li>");
+                $("#sections").append("<li><a href=\"#\">" + title + "</a></li>");
             }
         });
     }
@@ -145,12 +145,7 @@ $(document).ready(function() {
             
             $.each(data["sentences"], function(i, val) 
             {
-                $("#parser").append(CreateCheckbox(val["simplified"]));
-                
-                $("#parser .checkbox").last().tooltip({
-                    title: val["raw"],
-                    placement: "top"
-                });
+                $("#parser").append(CreateCheckbox(val));
             });
         })
         
@@ -198,6 +193,16 @@ $(document).ready(function() {
         });
     });
 
-    
+    $("#close").click(function(){
+        $.post( "/",
+            {
+                ajaxUrl: true,
+                action: "closeApp"
+            }) .
+            success(function(data)
+            {
+                window.close();
+            });
+    });
     
 });

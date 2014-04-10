@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 import nltk
 import json 
-import sumerizer
 import csv
-
-USELESSTAG = ['DT']
 
 dictBookmark = {}
 def loadCSV(path):
@@ -20,7 +17,7 @@ def simplifySentences(paragraphes):
             if mot.upper() in dictBookmark :
                 print mot
         tagged = setTags(s)
-        sentences.append({ 'raw': s, 'simplified': removeUselessTag(tagged)})
+        sentences.append(removeUselessTag(tagged))
 
     return json.dumps(
         {
@@ -39,12 +36,3 @@ def setTags(sentences):
 
 def removeUselessTag(sentence):
     return ' '.join([ "<b data-bookmark=\"" + dictBookmark[x[0]] + "\">" + x[0] +"</b>" if x[0] in dictBookmark else x[0] for x in sentence])
-
-def resume(paragraphes):
-    naivesum = sumerizer.NaiveSummarizer()
-    sentences = []
-    sentences.append({ 'raw': paragraphes, 'simplified': naivesum.summarize(paragraphes,1)})
-    return json.dumps(
-        {
-            "sentences": sentences
-        })
