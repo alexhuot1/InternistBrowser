@@ -108,7 +108,7 @@ $(document).ready(function() {
             var title = $(this).find("h2").text().toLowerCase();
             
             if (title != ""){
-                $("#sections").append("<li>" + title + "</li>");
+                $("#sections").append("<li><a href=\"#\">" + title + "</a></li>");
             }
         });
     }
@@ -126,6 +126,7 @@ $(document).ready(function() {
                 });
             }
         });
+        return text;
     }
     
     $("#sections").on("click", "a", function(event) {
