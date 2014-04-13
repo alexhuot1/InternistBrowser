@@ -204,5 +204,13 @@ $(document).ready(function() {
                 window.close();
             });
     });
+
+    $('#ajaxLoader').hide();
+    $(document).ajaxStart(function() {
+        $('#ajaxLoader').fadeIn()
+    });
+    $(document).ajaxStop(function() {
+        $('#ajaxLoader').fadeOut()
+    });
     
 });
