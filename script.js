@@ -128,7 +128,8 @@ $(document).ready(function() {
         });
     }
     
-    $("#sections").on("click", "li", function() {
+    $("#sections").on("click", "a", function(event) {
+        event.preventDefault();
         $("#parser").html("");
         
         var text = parser($(this).text());

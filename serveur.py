@@ -3,7 +3,7 @@ from BaseHTTPServer import BaseHTTPRequestHandler,HTTPServer
 from os import curdir, sep
 import cgi
 from threading import Thread
-import simplifier
+import bookmarkTagger
 import external
 import sys
 import webbrowser
@@ -73,13 +73,12 @@ class myHandler(BaseHTTPRequestHandler):
 		self.send_response(200)
 		self.end_headers()
 		if form["action"].value == "simplifier":
-			self.wfile.write(simplifier.simplifySentences(form["value"].value))
+			self.wfile.write(bookmarkTagger.tagBookmarks(form["value"].value))
 		elif form["action"].value == "extract":
 			self.wfile.write(external.extractHtml(form["url"].value))
 		elif form["action"].value == "loadCSV":
-			self.wfile.write(simplifier.loadCSV(form["csvPath"].value))
+			self.wfile.write(bookmarkTagger.loadCSV(form["csvPath"].value))
 		elif form["action"].value == "closeApp":
-			print"allo"
 			server.socket.close()
 		
 		return	

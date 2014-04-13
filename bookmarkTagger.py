@@ -11,11 +11,11 @@ def loadCSV(path):
         for row in reader:
             dictBookmark[row[0]] = row[5]
 
-def simplifySentences(paragraphes):
+def tagBookmarks(paragraphes):
     sentences = []
     for s in splitSententences(paragraphes):
         tagged = setTags(s)
-        sentences.append(removeUselessTag(tagged))
+        sentences.append(generateBookmarks(tagged))
 
     return json.dumps(
         {
@@ -32,7 +32,7 @@ def setTags(sentences):
     tokens = nltk.word_tokenize(sentences)
     return nltk.pos_tag(tokens)
 
-def removeUselessTag(sentence):
+def generateBookmarks(sentence):
     sentence = ' '.join([x[0] for x in sentence])
     for x in dictBookmark:
         #sentence = sentence.replace(" " + x +" "," <b data-bookmark=\"" + dictBookmark[x] + "\">" + x + "</b> ")
